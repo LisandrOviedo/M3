@@ -19,7 +19,7 @@ function ls(print) {
     if (error) {
       throw error;
     }
-    print(files.toString());
+    print(files.join(" "));
   });
 }
 
