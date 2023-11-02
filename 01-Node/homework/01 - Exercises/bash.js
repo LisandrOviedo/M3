@@ -5,13 +5,13 @@ const commands = require("./commands/index.js");
 function bash() {
   process.stdout.write("prompt > ");
   process.stdin.on("data", (data) => {
-    const args = data.toString().trim();
-    const cmd = args.split(" ")[0];
+    const args = data.toString().trim().split(" ");
+    const cmd = args.shift();
 
-    if (!commands.hasOwnProperty(cmd)) {
+    if (!commands[cmd]) {
       print("command not found: " + cmd);
     } else {
-      commands[cmd](print, args);
+      commands[cmd](print, args.join(" "));
     }
   });
 }
