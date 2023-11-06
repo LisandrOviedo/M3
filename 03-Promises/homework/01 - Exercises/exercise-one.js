@@ -29,6 +29,19 @@ function problemA() {
 
   // promise version
   // Tu código acá:
+  exerciseUtils
+    .promisifiedReadFile("./poem-one/stanza-02.txt")
+    .then((stanza2) => {
+      if (stanza2) {
+        exerciseUtils.blue(stanza2);
+      }
+      return exerciseUtils.promisifiedReadFile("./poem-one/stanza-03.txt");
+    })
+    .then((stanza3) => {
+      if (stanza3) {
+        exerciseUtils.blue(stanza3);
+      }
+    });
 }
 
 function problemB() {
