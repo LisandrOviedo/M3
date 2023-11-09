@@ -1,10 +1,32 @@
-'use strict';
+"use strict";
 /*----------------------------------------------------------------
 Promises Workshop: construye la libreria de ES6 promises, pledge.js
 ----------------------------------------------------------------*/
 // // TU CÓDIGO AQUÍ:
 
+function $Promise(executor) {
+  if (typeof executor !== "function")
+    throw TypeError("executor is not a function");
 
+  this._state = "pending";
+  this._value = undefined;
+
+  executor(this._internalResolve.bind(this), this._internalReject.bind(this));
+}
+
+$Promise.prototype._internalResolve = function (data) {
+  if (this._state === "pending") {
+    this._state = "fulfilled";
+    this._value = data;
+  }
+};
+
+$Promise.prototype._internalReject = function (reason) {
+  if (this._state === "pending") {
+    this._state = "rejected";
+    this._value = reason;
+  }
+};
 
 module.exports = $Promise;
 /*-------------------------------------------------------
