@@ -19,6 +19,7 @@ $Promise.prototype._internalResolve = function (data) {
   if (this._state === "pending") {
     this._state = "fulfilled";
     this._value = data;
+    this._callHandlers();
   }
 };
 
@@ -26,6 +27,7 @@ $Promise.prototype._internalReject = function (reason) {
   if (this._state === "pending") {
     this._state = "rejected";
     this._value = reason;
+    this._callHandlers();
   }
 };
 
@@ -35,18 +37,26 @@ $Promise.prototype.then = function (successCb, errorCb) {
   if (typeof errorCb !== "function") errorCb = false;
 
   this._handlerGroups.push({ successCb, errorCb });
+
+  if (this._state !== "pending") this._callHandlers();
 };
 
 $Promise.prototype._callHandlers = function () {
   while (this._handlerGroups.length) {
     let handler = this._handlerGroups.shift();
 
-    if (this._state === "fulfilled") {
+    if (this._state === "fulfilled" && handler.successCb) {
+      handler.successCb(this._value);
     }
 
-    if (this._state === "rejected") {
+    if (this._state === "rejected" && handler.errorCb) {
+      handler.errorCb(this._value);
     }
   }
+};
+
+$Promise.prototype.catch = function (errorCb) {
+  return this.then(null, errorCb);
 };
 
 module.exports = $Promise;
