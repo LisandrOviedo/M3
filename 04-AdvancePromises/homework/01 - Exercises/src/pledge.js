@@ -36,21 +36,24 @@ $Promise.prototype.then = function (successCb, errorCb) {
 
   if (typeof errorCb !== "function") errorCb = false;
 
-  this._handlerGroups.push({ successCb, errorCb });
+  let downstreamPromise = new $Promise(() => {});
+
+  this._handlerGroups.push({ successCb, errorCb, downstreamPromise });
 
   if (this._state !== "pending") this._callHandlers();
+  return downstreamPromise;
 };
 
 $Promise.prototype._callHandlers = function () {
   while (this._handlerGroups.length) {
     let handler = this._handlerGroups.shift();
 
-    if (this._state === "fulfilled" && handler.successCb) {
-      handler.successCb(this._value);
+    if (this._state === "fulfilled") {
+      handler.successCb && handler.successCb(this._value);
     }
 
-    if (this._state === "rejected" && handler.errorCb) {
-      handler.errorCb(this._value);
+    if (this._state === "rejected") {
+      handler.errorCb && handler.errorCb(this._value);
     }
   }
 };
