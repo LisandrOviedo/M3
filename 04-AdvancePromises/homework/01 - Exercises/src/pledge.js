@@ -49,11 +49,53 @@ $Promise.prototype._callHandlers = function () {
     let handler = this._handlerGroups.shift();
 
     if (this._state === "fulfilled") {
-      handler.successCb && handler.successCb(this._value);
+      if (!handler.successCb) {
+        handler.downstreamPromise._internalResolve(this._value);
+      } else {
+        try {
+          let result = handler.successCb(this._value);
+
+          if (result instanceof $Promise) {
+            let sH = (value) => {
+              handler.downstreamPromise._internalResolve(value);
+            };
+            let eH = (reason) => {
+              handler.downstreamPromise._internalReject(reason);
+            };
+
+            result.then(sH, eH);
+          } else {
+            handler.downstreamPromise._internalResolve(result);
+          }
+        } catch (error) {
+          handler.downstreamPromise._internalReject(error);
+        }
+      }
     }
 
     if (this._state === "rejected") {
-      handler.errorCb && handler.errorCb(this._value);
+      if (!handler.errorCb) {
+        handler.downstreamPromise._internalReject(this._value);
+      } else {
+        try {
+          let result = handler.errorCb(this._value);
+
+          if (result instanceof $Promise) {
+            let sH = (value) => {
+              handler.downstreamPromise._internalResolve(value);
+            };
+            let eH = (reason) => {
+              handler.downstreamPromise._internalReject(reason);
+            };
+
+            result.then(sH, eH);
+          } else {
+            handler.downstreamPromise._internalResolve(result);
+          }
+        } catch (error) {
+          handler.downstreamPromise._internalReject(error);
+        }
+      }
     }
   }
 };
