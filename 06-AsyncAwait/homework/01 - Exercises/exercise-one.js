@@ -208,22 +208,22 @@ async function problemF() {
   // Tu código acá:
 
   try {
+    exerciseUtils.readFile("poem-one/wrong-file-name.txt");
+
+    let stanza4 = await exerciseUtils.promisifiedReadFile(
+      "poem-one/wrong-file-name.txt"
+    );
+
+    exerciseUtils.blue(stanza4);
+
+    ////////////////////////////////
+
     exerciseUtils.readFile("poem-one/stanza-03.txt");
 
     let stanza3 = await exerciseUtils.promisifiedReadFile(
       "poem-one/stanza-03.txt"
     );
-
     exerciseUtils.blue(stanza3);
-
-    ////////////////////////////////
-
-    exerciseUtils.readFile("poem-one/stanza-04.txt");
-
-    let stanza4 = await exerciseUtils.promisifiedReadFile(
-      "poem-one/wrong-file-name.txt"
-    );
-    exerciseUtils.blue(stanza4);
   } catch (error) {
     exerciseUtils.magenta(error);
   }
