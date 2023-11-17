@@ -41,6 +41,16 @@ async function problemA() {
 
   // asyncawait version
   // Tu código acá:
+
+  try {
+    let stanza1 = await exerciseUtils.promisifiedReadFile(
+      "poem-one/stanza-01.txt"
+    );
+
+    exerciseUtils.blue(stanza1);
+  } catch (error) {
+    exerciseUtils.magenta(error);
+  }
 }
 
 async function problemB() {
@@ -56,6 +66,20 @@ async function problemB() {
 
   // asyncawait version
   // Tu código acá:
+
+  try {
+    let stanza2 = await exerciseUtils.promisifiedReadFile(
+      "poem-one/stanza-02.txt"
+    );
+    let stanza3 = await exerciseUtils.promisifiedReadFile(
+      "poem-one/stanza-03.txt"
+    );
+
+    exerciseUtils.blue(stanza2);
+    exerciseUtils.blue(stanza3);
+  } catch (error) {
+    exerciseUtils.magenta(error);
+  }
 }
 
 async function problemC() {
@@ -72,6 +96,26 @@ async function problemC() {
 
   // asyncawait version
   // Tu código acá:
+
+  try {
+    exerciseUtils.readFile("poem-one/stanza-02.txt");
+
+    let stanza2 = await exerciseUtils.promisifiedReadFile(
+      "poem-one/stanza-02.txt"
+    );
+
+    exerciseUtils.blue(stanza2);
+
+    exerciseUtils.readFile("poem-one/stanza-03.txt");
+
+    let stanza3 = await exerciseUtils.promisifiedReadFile(
+      "poem-one/stanza-03.txt"
+    );
+
+    exerciseUtils.blue(stanza3);
+  } catch (error) {
+    exerciseUtils.magenta(error);
+  }
 }
 
 async function problemD() {
@@ -87,6 +131,16 @@ async function problemD() {
 
   // asyncawait version
   // Tu código acá:
+
+  try {
+    let stanza4 = await exerciseUtils.promisifiedReadFile(
+      "poem-one/wrong-file-name.txt"
+    );
+
+    exerciseUtils.blue(stanza4);
+  } catch (error) {
+    exerciseUtils.magenta(error);
+  }
 }
 
 async function problemE() {
@@ -107,6 +161,26 @@ async function problemE() {
 
   // asyncawait version
   // Tu código acá:
+
+  try {
+    exerciseUtils.readFile("poem-one/stanza-03.txt");
+
+    let stanza3 = await exerciseUtils.promisifiedReadFile(
+      "poem-one/stanza-03.txt"
+    );
+
+    exerciseUtils.blue(stanza3);
+
+    exerciseUtils.readFile("poem-one/stanza-04.txt");
+
+    let stanza4 = await exerciseUtils.promisifiedReadFile(
+      "poem-one/wrong-file-name.txt"
+    );
+
+    exerciseUtils.blue(stanza4);
+  } catch (error) {
+    exerciseUtils.magenta(error);
+  }
 }
 
 async function problemF() {
@@ -132,4 +206,25 @@ async function problemF() {
 
   // asyncawait version
   // Tu código acá:
+
+  try {
+    exerciseUtils.readFile("poem-one/stanza-03.txt");
+
+    let stanza3 = await exerciseUtils.promisifiedReadFile(
+      "poem-one/stanza-03.txt"
+    );
+
+    exerciseUtils.blue(stanza3);
+
+    ////////////////////////////////
+
+    exerciseUtils.readFile("poem-one/stanza-04.txt");
+
+    let stanza4 = await exerciseUtils.promisifiedReadFile(
+      "poem-one/wrong-file-name.txt"
+    );
+    exerciseUtils.blue(stanza4);
+  } catch (error) {
+    exerciseUtils.magenta(error);
+  }
 }
